@@ -1,1 +1,10 @@
 .idea
+Cache/
+CachedData/
+CachedExtensions/
+GPUCache/
+Backups/
+blob_storage/
+GPUCache/
+User/
+logs/
