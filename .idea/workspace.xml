@@ -2,20 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ce492d4f-186f-40f8-b123-c6b65069741a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/libs/php-jwt-master/.gitattributes" beforeDir="false" afterPath="$PROJECT_DIR$/libs/php-jwt-master/.gitattributes" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libs/php-jwt-master/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/libs/php-jwt-master/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libs/php-jwt-master/.travis.yml" beforeDir="false" afterPath="$PROJECT_DIR$/libs/php-jwt-master/.travis.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libs/php-jwt-master/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/libs/php-jwt-master/LICENSE" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libs/php-jwt-master/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/libs/php-jwt-master/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libs/php-jwt-master/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/libs/php-jwt-master/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libs/php-jwt-master/phpunit.xml.dist" beforeDir="false" afterPath="$PROJECT_DIR$/libs/php-jwt-master/phpunit.xml.dist" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libs/php-jwt-master/src/BeforeValidException.php" beforeDir="false" afterPath="$PROJECT_DIR$/libs/php-jwt-master/src/BeforeValidException.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libs/php-jwt-master/src/ExpiredException.php" beforeDir="false" afterPath="$PROJECT_DIR$/libs/php-jwt-master/src/ExpiredException.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libs/php-jwt-master/src/JWT.php" beforeDir="false" afterPath="$PROJECT_DIR$/libs/php-jwt-master/src/JWT.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libs/php-jwt-master/src/SignatureInvalidException.php" beforeDir="false" afterPath="$PROJECT_DIR$/libs/php-jwt-master/src/SignatureInvalidException.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libs/php-jwt-master/tests/JWTTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/libs/php-jwt-master/tests/JWTTest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libs/php-jwt-master/tests/autoload.php.dist" beforeDir="false" afterPath="$PROJECT_DIR$/libs/php-jwt-master/tests/autoload.php.dist" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libs/php-jwt-master/tests/bootstrap.php" beforeDir="false" afterPath="$PROJECT_DIR$/libs/php-jwt-master/tests/bootstrap.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/094a46fd-4ab3-4c4c-89be-ad4e3f516539.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/094a46fd-4ab3-4c4c-89be-ad4e3f516539.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,13 +49,20 @@
         <item name="gallery@localhost" type="feb32156:DbDataSourceImpl" />
         <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
         <item name="gallery: schema" type="ebfa3cd1:MariaImplModel$Schema" />
+        <item name="collections_images: table" type="dbc44a63:MariaImplModel$Table" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="gallery@localhost" type="feb32156:DbDataSourceImpl" />
+        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+        <item name="gallery: schema" type="ebfa3cd1:MariaImplModel$Schema" />
         <item name="images: table" type="dbc44a63:MariaImplModel$Table" />
       </path>
     </expand>
     <select />
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/libs/php-jwt-master" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1UEE6JJh0aU7zBeczGSPYRlfjo1" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -91,16 +88,6 @@
                 <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
                 <item name="root:gallery@localhost" type="7427dc5b:ServiceModel$ServiceGroupNode" />
               </path>
-              <path>
-                <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-                <item name="root:gallery@localhost" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-                <item name="com.intellij.database.console.session.MessageBusSession@187b3cab" type="9fbbdea:ServiceModel$ServiceNode" />
-              </path>
-              <path>
-                <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-                <item name="root:gallery@localhost" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-                <item name="com.intellij.database.console.session.MessageBusSession@227b1fe1" type="9fbbdea:ServiceModel$ServiceNode" />
-              </path>
             </expand>
             <select />
           </treeState>
@@ -120,6 +107,7 @@
       <updated>1574913178071</updated>
       <workItem from="1574913181113" duration="16610000" />
       <workItem from="1574953995341" duration="3665000" />
+      <workItem from="1575176860045" duration="2655000" />
     </task>
     <servers />
   </component>
@@ -173,14 +161,18 @@
       <screen x="0" y="27" width="1366" height="741" />
     </state>
     <state width="263" height="500" key="HiddenNamespacesPopup/0.27.1366.741@0.27.1366.741" timestamp="1574954234221" />
-    <state x="395" y="37" width="566" height="727" key="com.intellij.database.view.ui.AbstractDbRefactoringDialog" timestamp="1574957540835">
+    <state x="436" y="223" width="484" height="360" key="com.intellij.database.psi.DbRenamePsiElementProcessor.DbRenameDialog" timestamp="1575181117628">
       <screen x="0" y="27" width="1366" height="741" />
     </state>
-    <state x="395" y="37" width="566" height="727" key="com.intellij.database.view.ui.AbstractDbRefactoringDialog/0.27.1366.741@0.27.1366.741" timestamp="1574957540835" />
-    <state x="339" y="225" key="com.intellij.ide.util.TipDialog" timestamp="1574953995662">
+    <state x="436" y="223" width="484" height="360" key="com.intellij.database.psi.DbRenamePsiElementProcessor.DbRenameDialog/0.27.1366.741@0.27.1366.741" timestamp="1575181117628" />
+    <state x="395" y="37" width="566" height="727" key="com.intellij.database.view.ui.AbstractDbRefactoringDialog" timestamp="1575181018858">
       <screen x="0" y="27" width="1366" height="741" />
     </state>
-    <state x="339" y="225" key="com.intellij.ide.util.TipDialog/0.27.1366.741@0.27.1366.741" timestamp="1574953995662" />
+    <state x="395" y="37" width="566" height="727" key="com.intellij.database.view.ui.AbstractDbRefactoringDialog/0.27.1366.741@0.27.1366.741" timestamp="1575181018858" />
+    <state x="339" y="225" key="com.intellij.ide.util.TipDialog" timestamp="1575176884799">
+      <screen x="0" y="27" width="1366" height="741" />
+    </state>
+    <state x="339" y="225" key="com.intellij.ide.util.TipDialog/0.27.1366.741@0.27.1366.741" timestamp="1575176884799" />
     <state x="0" y="27" width="709" height="741" key="find.popup" timestamp="1574956910421">
       <screen x="0" y="27" width="1366" height="741" />
     </state>
