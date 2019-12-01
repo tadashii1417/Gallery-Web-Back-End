@@ -32,10 +32,9 @@ class Image
                 height = :height,
                 description = :description,
                 url = :url,
-                categoryId = :categoryId,
-                userId = :userId
+                category_id = :categoryId,
+                user_id = :userId
                 ";
-
         $stmt = $this->conn->prepare($query);
 
         // bind param into sql stmt
