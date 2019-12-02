@@ -1,5 +1,5 @@
 {
-    "telemetry.machineId": "9308545b59c0e91e0f9a8bcb62e641881f975d99faff4adf472dffda6cdc12f5",
+    "telemetry.machineId": "325e9a8eacc4c2cf8fdefbb13c4f1a7cef199392492ed947e1856de0964ec72e",
     "openedPathsList": {
         "workspaces3": [
             "file:///opt/lampp/htdocs/web/backend"
@@ -373,8 +373,7 @@
                                 },
                                 {
                                     "id": "workbench.action.togglePanel",
-                                    "label": "Show &&Panel",
-                                    "checked": true
+                                    "label": "Show &&Panel"
                                 },
                                 {
                                     "id": "vscode.menubar.separator"
@@ -544,7 +543,8 @@
                 "items": [
                     {
                         "id": "workbench.action.navigateBack",
-                        "label": "&&Back"
+                        "label": "&&Back",
+                        "enabled": false
                     },
                     {
                         "id": "workbench.action.navigateForward",
@@ -553,7 +553,8 @@
                     },
                     {
                         "id": "workbench.action.navigateToLastEditLocation",
-                        "label": "&&Last Edit Location"
+                        "label": "&&Last Edit Location",
+                        "enabled": false
                     },
                     {
                         "id": "vscode.menubar.separator"
@@ -825,7 +826,8 @@
                     },
                     {
                         "id": "workbench.action.terminal.split",
-                        "label": "&&Split Terminal"
+                        "label": "&&Split Terminal",
+                        "enabled": false
                     },
                     {
                         "id": "vscode.menubar.separator"
@@ -1379,13 +1381,13 @@
     "windowsState": {
         "lastActiveWindow": {
             "folder": "file:///opt/lampp/htdocs/web/backend",
-            "backupPath": "/opt/lampp/htdocs/web/backend/Backups/627af5721fbdb561cdec9913c2c56f63",
+            "backupPath": "/opt/lampp/htdocs/web/backend/~/Inbox/Backups/627af5721fbdb561cdec9913c2c56f63",
             "uiState": {
-                "mode": 1,
+                "mode": 0,
                 "x": 448,
                 "y": 184,
                 "width": 1024,
-                "height": 768
+                "height": 796
             }
         },
         "openedWindows": []
