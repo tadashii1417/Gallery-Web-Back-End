@@ -47,7 +47,7 @@ if ($jwt) {
                 $image->width = $img_info[0];
                 $image->height = $img_info[1];
                 $image->url = "/upload/images/" . $url;
-                $image->categoryId = $_POST['categoryId'];
+                $image->categoryId = $_POST['category_id'];
                 $image->description = $_POST['description'];
 
                 if ($image->create()) {
