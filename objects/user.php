@@ -18,6 +18,22 @@ class User {
 		$this->conn = $db;
 	}
 
+
+    public function getUploadedImages()
+    {
+        $query = "SELECT * FROM images
+            WHERE user_id = :userId
+        ";
+
+		$stmt = $this->conn->prepare($query);
+		
+		$stmt->bindparam(':userId', $this->id);
+		
+        if ($stmt->execute()) {
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } 
+        return FALSE;
+    }
 	function create() {
 		$query = "INSERT INTO " . $this->table_name . "
             SET
