@@ -18,17 +18,17 @@ use \Firebase\JWT\JWT;
 include_once '../../config/database.php';
 include_once '../../objects/user.php';
 
-$data = json_decode( file_get_contents( "php://input" ) );
+$data = json_decode(file_get_contents("php://input"));
 
 $database = new Database();
 $db = $database->getConnection();
 
-$user = new User( $db );
-$jwt = isset( $data->jwt ) ? $data->jwt : "";
+$user = new User($db);
+$jwt = isset($data->jwt) ? $data->jwt : "";
 
 if ($jwt) {
     try {
-		$decoded = JWT::decode( $jwt, $key, [ 'HS256' ] );
+        $decoded = JWT::decode($jwt, $key, ['HS256']);
 
         $user->id = $decoded->data->id;
 
@@ -38,9 +38,8 @@ if ($jwt) {
             echo json_encode(["images" => $fetchedImages]);
         } else {
             echo json_encode(["message" => "can't fetch images"]);
-        }  
-    }
-    catch (Exception $e) {
+        }
+    } catch (Exception $e) {
         http_response_code(401);
         echo json_encode([
             "message" => "Access denied.",
@@ -51,5 +50,3 @@ if ($jwt) {
     http_response_code(401);
     echo json_encode(["message" => "Access denied."]);
 }
-
-

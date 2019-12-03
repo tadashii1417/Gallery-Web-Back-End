@@ -51,4 +51,21 @@ class Image
         }
         return FALSE;
     }
+
+    #####################################################
+    #Date: 21:00 3/12/2019
+    #Author: Dang Bao
+    #In:
+    #Out: Return a list of all image in database with all of it info.
+    #####################################################
+    function get_all_images()
+    {
+        $query = "SELECT * FROM " . $this->table_name;
+        $stmt = $this->conn->prepare($query);
+
+        if ($stmt->execute()) {
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+        return FALSE;
+    }
 }
