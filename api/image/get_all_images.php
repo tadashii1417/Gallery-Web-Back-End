@@ -1,9 +1,9 @@
 <?php
 #####################################################
-#Date: 16:00 4/12/2019
+#Date: 21:00 3/12/2019
 #Author: Dang Bao
-#In:  image_id from clinet
-#Out: Increase download time of an image in database by one.
+#In:  jwt from client
+#Out: Return all images in database with their owner info
 #####################################################
 // required headers
 header("Access-Control-Allow-Origin: *");
@@ -25,68 +25,40 @@ include_once '../../config/database.php';
 include_once '../../objects/image.php';
 include_once '../../objects/user.php';
 
-#Get input jwt
-$data = json_decode(file_get_contents("php://input"));
 
 #Create connection to database
 $database = new Database();
 $db = $database->getConnection();
 
-#Create user object to get check user data
-$user = new User($db);
 
-#Check the input
-$jwt = isset($data->jwt) ? $data->jwt : "";
+try {
 
-if ($jwt) {
-    try {
-        #Decode jwt to get user information
-        $decoded = JWT::decode($jwt, $key, ['HS256']);
+    #Create object image
+    $all_image = new Image($db);
+    #Call function from image object.
+    $all_image_return = $all_image->get_all_images();
 
-        #Get Username
-        $user->username = $decoded->data->username;
+    if ($all_image_return) {
+        $size_of_list_image = sizeof($all_image_return);
 
-        #Check if the username exits
-        $check_if_user_exit = $user->usernameExists();
-
-        #If the username exits, let get the images
-        if ($check_if_user_exit) {
-
-            #Create object image
-            $all_image = new Image($db);
-            #Call function from image object.
-            $all_image_return = $all_image->get_all_images();
-
-            if ($all_image_return) {
-                $size_of_list_image = sizeof($all_image_return);
-
-                for ($temp_count = 0; $temp_count < $size_of_list_image; $temp_count++) {
-                    $temp_user = new User($db);
-                    $user->id = $all_image_return[$temp_count]['user_id'];
-                    #Create an object for owner
-                    $temp_owner = ["owner" => $user->get_owner_info()];
-                    #Add owner to picture info
-                    $all_image_return[$temp_count] = array_merge($all_image_return[$temp_count], $temp_owner);
-                    unset($temp_user);
-                }
-
-                #If it can get some images, retutn it.
-                http_response_code(200);
-                echo json_encode(["images" => $all_image_return]);
-            } else {
-                #If it can not get anything, return notice.
-                http_response_code(200);
-                echo json_encode(["images" => ""]);
-            }
+        for ($temp_count = 0; $temp_count < $size_of_list_image; $temp_count++) {
+            $temp_user = new User($db);
+            $temp_user->id = $all_image_return[$temp_count]['user_id'];
+            #Create an object for owner
+            $temp_owner = ["owner" => $temp_user->get_owner_info()];
+            #Add owner to picture info
+            $all_image_return[$temp_count] = array_merge($all_image_return[$temp_count], $temp_owner);
+            unset($temp_user);
         }
-    } catch (Exception $e) {
-        http_response_code(401);
-        echo json_encode([
-            "message" => "Access denied.",
-            "error" => $e->getMessage()
-        ]);
+
+        #If it can get some images, retutn it.
+        http_response_code(200);
+        echo json_encode(["images" => $all_image_return]);
     }
-} else {
+} catch (Exception $e) {
     http_response_code(401);
-    echo json_encode(["message" => "Access denied."]);
+    echo json_encode([
+        "message" => "Access denied.",
+        "error" => $e->getMessage()
+    ]);
 }

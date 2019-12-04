@@ -1,4 +1,11 @@
 <?php
+    #####################################################
+    #Date: 16:00 4/12/2019
+    #Author: Dang Bao
+    #In:
+    #Out: Client call this API to increase number of download
+    #     times in database by one
+    #####################################################
 // required headers
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
