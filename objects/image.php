@@ -90,7 +90,7 @@ class Image
     #Date: 18:00 4/12/2019
     #Author: Dang Bao
     #In:  
-    #Out: Client call this API to increase number of like
+    #Out: Client call this API to increase number of love
     #     times of an image in database by one
     #####################################################
     function increase_love_times()
@@ -104,6 +104,24 @@ class Image
         return FALSE;
     }
 
+
+    #####################################################
+    #Date: 20:30 4/12/2019
+    #Author: Dang Bao
+    #In:  
+    #Out: Client call this API to increase number of view
+    #     times of an image in database by one
+    #####################################################
+    function increase_view_times()
+    {
+        $query = "UPDATE " . $this->table_name . " SET view_count = view_count + 1 WHERE id =:id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':id', $this->id);
+        if ($stmt->execute()) {
+            return TRUE;
+        }
+        return FALSE;
+    }
 
     #####################################################
     #Date: 19:00 4/12/2019
