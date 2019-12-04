@@ -52,24 +52,19 @@ if ($jwt) {
             $all_image_return = $all_image->get_all_images();
 
             if ($all_image_return) {
-                // foreach ($all_image_return as $r_image) {
-                //     $temp_user = new User($db);
-                //     $user->id = 
-                // }
                 $size_of_list_image = sizeof($all_image_return);
 
                 for ($temp_count = 0; $temp_count < $size_of_list_image; $temp_count++) {
                     $temp_user = new User($db);
                     $user->id = $all_image_return[$temp_count]['user_id'];
-                    $temp_owner = $user->get_owner_info();
-                    $all_image_return[$temp_count] = array($temp_owner, $all_image_return[$temp_count]);
+                    #Create an object for owner
+                    $temp_owner = ["owner" => $user->get_owner_info()];
+                    #Add owner to picture info
+                    $all_image_return[$temp_count] = array_merge($all_image_return[$temp_count], $temp_owner);
                     unset($temp_user);
                 }
 
                 #If it can get some images, retutn it.
-
-                #echo json_encode($all_image_return[0]);
-
                 echo json_encode(["images" => $all_image_return]);
             } else {
                 #If it can not get anything, return notice.
