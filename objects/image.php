@@ -103,4 +103,23 @@ class Image
         }
         return FALSE;
     }
+
+
+    #####################################################
+    #Date: 19:00 4/12/2019
+    #Author: Dang Bao
+    #In:  id of category from client
+    #Out: Return all images in database with their owner info
+    #       with category like input
+    #####################################################
+    function get_all_image_by_category_id()
+    {
+        $query = "SELECT * FROM " . $this->table_name . " WHERE category_id = :id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':id', $this->categoryId);
+        if ($stmt->execute()) {
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+        return FALSE;
+    }
 }
