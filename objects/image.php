@@ -85,4 +85,22 @@ class Image
         }
         return FALSE;
     }
+
+    #####################################################
+    #Date: 18:00 4/12/2019
+    #Author: Dang Bao
+    #In:  jwt of user and image_id from client
+    #Out: Client call this API to increase number of like
+    #     times of an image in database by one
+    #####################################################
+    function increase_love_times()
+    {
+        $query = "UPDATE " . $this->table_name . " SET love = love + 1 WHERE id =:id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':id', $this->id);
+        if ($stmt->execute()) {
+            return TRUE;
+        }
+        return FALSE;
+    }
 }

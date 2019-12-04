@@ -4,7 +4,7 @@
     #Author: Dang Bao
     #In:
     #Out: Client call this API to increase number of download
-    #     times in database by one
+    #     times of an image in database by one
     #####################################################
 // required headers
 header("Access-Control-Allow-Origin: *");
@@ -49,7 +49,8 @@ if ($id) {
             http_response_code(200);
         } else {
             #If it can not get anything, return notice.
-            http_response_code(400);
+            http_response_code(401);
+            echo json_encode(["message" => "Access denied."]);
         }
     } catch (Exception $e) {
         http_response_code(401);
@@ -60,5 +61,5 @@ if ($id) {
     }
 } else {
     http_response_code(400);
-    echo json_encode(["message" => "Invalid input from client."]);
+    echo json_encode(["message" => "Access denied."]);
 }

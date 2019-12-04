@@ -32,7 +32,6 @@ $db = $database->getConnection();
 
 
 try {
-
     #Create object image
     $all_image = new Image($db);
     #Call function from image object.
@@ -54,6 +53,9 @@ try {
         #If it can get some images, retutn it.
         http_response_code(200);
         echo json_encode(["images" => $all_image_return]);
+    } else {
+        http_response_code(401);
+        echo json_encode(["message" => "Access denied."]);
     }
 } catch (Exception $e) {
     http_response_code(401);
