@@ -89,7 +89,7 @@ class Image
     #####################################################
     #Date: 18:00 4/12/2019
     #Author: Dang Bao
-    #In:  jwt of user and image_id from client
+    #In:  
     #Out: Client call this API to increase number of like
     #     times of an image in database by one
     #####################################################
@@ -108,7 +108,7 @@ class Image
     #####################################################
     #Date: 19:00 4/12/2019
     #Author: Dang Bao
-    #In:  id of category from client
+    #In:  
     #Out: Return all images in database with their owner info
     #       with category like input
     #####################################################
@@ -117,6 +117,23 @@ class Image
         $query = "SELECT * FROM " . $this->table_name . " WHERE category_id = :id";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':id', $this->categoryId);
+        if ($stmt->execute()) {
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+        return FALSE;
+    }
+
+    #####################################################
+    #Date: 20:00 4/12/2019
+    #Author: Dang Bao
+    #In:  
+    #Out: Return image info with input id
+    #####################################################
+    function get_image_info_by_image_id()
+    {
+        $query = "SELECT * FROM " . $this->table_name . " WHERE id = :id LIMIT 0,1";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':id', $this->id);
         if ($stmt->execute()) {
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         }

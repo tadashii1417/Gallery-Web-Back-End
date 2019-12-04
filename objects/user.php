@@ -155,7 +155,7 @@ class User
 	#####################################################
 	function get_owner_info()
 	{
-		$query = "SELECT id, username, firstname, lastname, description, avatarUrl, email, role, status FROM " . $this->table_name . " WHERE id = :id";
+		$query = "SELECT id, username, firstname, lastname, description, avatarUrl, email, role, status FROM " . $this->table_name . " WHERE id = :id LIMIT 0,1";
 		$stmt = $this->conn->prepare($query);
 		$stmt->bindParam(':id', $this->id);
 
