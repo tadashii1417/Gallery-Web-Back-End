@@ -1,10 +1,4 @@
 <?php
-#####################################################
-#Date: 21:00 3/12/2019
-#Author: Dang Bao
-#In:  jwt from client
-#Out: Return all image in database with their owner info.
-#####################################################
 // required headers
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
@@ -22,37 +16,42 @@ include_once '../../libs/php-jwt-master/src/JWT.php';
 use \Firebase\JWT\JWT;
 
 include_once '../../config/database.php';
-include_once '../../objects/user.php';
+include_once '../../objects/image.php';
 
+#Get input jwt
 $data = json_decode(file_get_contents("php://input"));
 
+#Create connection to database
 $database = new Database();
 $db = $database->getConnection();
 
-$user = new User($db);
-$jwt = isset($data->jwt) ? $data->jwt : "";
+#Check the input
+$id = isset($data->id) ? $data->id : "";
 
-if ($jwt) {
+if ($id) {
     try {
-        $decoded = JWT::decode($jwt, $key, ['HS256']);
+        #Decode jwt to get user information
+        $change_image = new Image($db);
+        $change_image->id = $id;
 
-        $user->id = $decoded->data->id;
+        $result = $change_image->increase_download_times();
 
-        $fetchedImages = $user->getUploadedImages();
-
-        if ($fetchedImages) {
-            echo json_encode(["images" => $fetchedImages]);
+        if ($result) {
+            #If it can get some images, retutn it.
+            #Return response code
+            http_response_code(200);
         } else {
-            echo json_encode(["message" => "can't fetch images"]);
+            #If it can not get anything, return notice.
+            http_response_code(400);
         }
     } catch (Exception $e) {
         http_response_code(401);
         echo json_encode([
             "message" => "Access denied.",
-            "error" => $e->getMessage(),
+            "error" => $e->getMessage()
         ]);
     }
 } else {
-    http_response_code(401);
-    echo json_encode(["message" => "Access denied."]);
+    http_response_code(400);
+    echo json_encode(["message" => "Invalid input from client."]);
 }

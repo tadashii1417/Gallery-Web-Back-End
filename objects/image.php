@@ -68,4 +68,21 @@ class Image
         }
         return FALSE;
     }
+
+    #####################################################
+    #Date: 16:00 4/12/2019
+    #Author: Dang Bao
+    #In:
+    #Out: Increase number of download times in database by one
+    #####################################################
+    function increase_download_times()
+    {
+        $query = "UPDATE " . $this->table_name . " SET download = download + 1 WHERE id =:id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':id', $this->id);
+        if ($stmt->execute()) {
+            return TRUE;
+        }
+        return FALSE;
+    }
 }

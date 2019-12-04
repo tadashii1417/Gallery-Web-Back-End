@@ -1,4 +1,10 @@
 <?php
+#####################################################
+#Date: 16:00 4/12/2019
+#Author: Dang Bao
+#In:  image_id from clinet
+#Out: Increase download time of an image in database by one.
+#####################################################
 // required headers
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
@@ -65,17 +71,19 @@ if ($jwt) {
                 }
 
                 #If it can get some images, retutn it.
+                http_response_code(200);
                 echo json_encode(["images" => $all_image_return]);
             } else {
                 #If it can not get anything, return notice.
-                echo json_encode(["message" => "can't fetch images"]);
+                http_response_code(200);
+                echo json_encode(["images" => ""]);
             }
         }
     } catch (Exception $e) {
         http_response_code(401);
         echo json_encode([
             "message" => "Access denied.",
-            "error" => $e->getMessage(),
+            "error" => $e->getMessage()
         ]);
     }
 } else {
