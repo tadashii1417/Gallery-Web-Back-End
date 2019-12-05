@@ -40,7 +40,7 @@ if ($jwt) {
 
         $fetchedImages = $user->getUploadedImages();
 
-        if ($fetchedImages) {
+        if (isset($fetchedImages)) {
             echo json_encode(["images" => $fetchedImages]);
         } else {
             echo json_encode(["message" => "can't fetch images"]);
