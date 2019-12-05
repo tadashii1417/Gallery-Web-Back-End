@@ -14,6 +14,7 @@ class User
 	public $username;
 	public $password;
 	public $avatarUrl = "https://cdn0.iconfinder.com/data/icons/avatars-6/500/Avatar_boy_man_people_account_client_male_person_user_work_sport_beard_team_glasses-512.png";
+	public $description;
 
 	public function __construct($db)
 	{
@@ -45,7 +46,8 @@ class User
                 email = :email,
                 username = :username,
                 password = :password,
-                avatarUrl = :avatarUrl
+				avatarUrl = :avatarUrl,
+				description = :description
                 ";
 
 		$stmt = $this->conn->prepare($query);
@@ -56,6 +58,7 @@ class User
 		$this->email     = htmlspecialchars(strip_tags($this->email));
 		$this->username  = htmlspecialchars(strip_tags($this->username));
 		$this->password  = htmlspecialchars(strip_tags($this->password));
+		$this->description  = htmlspecialchars(strip_tags($this->description));
 
 		// bind param into sql stmt
 		$stmt->bindParam(':firstname', $this->firstname);
@@ -63,6 +66,7 @@ class User
 		$stmt->bindParam(':email', $this->email);
 		$stmt->bindParam(':username', $this->username);
 		$stmt->bindParam(':avatarUrl', $this->avatarUrl);
+		$stmt->bindParam(':description', $this->description);
 
 		// hash the password before saving to database
 		$password_hash = password_hash($this->password, PASSWORD_BCRYPT);
@@ -95,6 +99,7 @@ class User
 			$this->lastname  = $row['lastname'];
 			$this->email     = $row['email'];
 			$this->avatarUrl = $row['avatarUrl'];
+			$this->description = $row['description'];
 
 			return TRUE;
 		}
@@ -113,7 +118,8 @@ class User
             SET
                 firstname = :firstname,
                 lastname = :lastname,
-                email = :email
+				email = :email,
+				description = :description
                 {$password_set}
             WHERE id = :id";
 
@@ -124,11 +130,13 @@ class User
 		$this->firstname = htmlspecialchars(strip_tags($this->firstname));
 		$this->lastname  = htmlspecialchars(strip_tags($this->lastname));
 		$this->email     = htmlspecialchars(strip_tags($this->email));
+		$this->description     = htmlspecialchars(strip_tags($this->description));
 
 		// bind the values from the form
 		$stmt->bindParam(':firstname', $this->firstname);
 		$stmt->bindParam(':lastname', $this->lastname);
 		$stmt->bindParam(':email', $this->email);
+		$stmt->bindParam(':description', $this->description);
 
 		if (!empty($this->password)) {
 			$this->password = htmlspecialchars(strip_tags($this->password));
@@ -143,7 +151,8 @@ class User
 		if ($stmt->execute()) {
 			return TRUE;
 		}
-
+		print_r($stmt->queryString);
+		// print_r($stmt->errorInfo());
 		return FALSE;
 	}
 
