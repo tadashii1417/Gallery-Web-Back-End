@@ -32,6 +32,8 @@ $user->lastname = $data->lastname;
 $user->email = $data->email;
 $user->username = $data->username;
 $user->password = $data->password;
+// TODO: check if username exists.
+
 
 // create the user
 if ($user->create()) {
