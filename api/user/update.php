@@ -37,6 +37,7 @@ if ( $jwt ) {
 		$user->firstname = $data->firstname;
 		$user->lastname  = $data->lastname;
 		$user->email     = $data->email;
+		$user->description = $data->description;
 		if ( $user->update() ) {
 			//regenerate jwt
 			$token = [
@@ -51,6 +52,7 @@ if ( $jwt ) {
 					"firstname" => $user->firstname,
 					"lastname"  => $user->lastname,
 					"avatarUrl" => $user->avatarUrl,
+					"description" => $user->description,
 				],
 			];
 			$jwt   = JWT::encode( $token, $key );
