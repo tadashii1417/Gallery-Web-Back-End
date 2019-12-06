@@ -37,6 +37,25 @@ class User
 		}
 		return FALSE;
 	}
+
+	public function getCollections()
+	{
+		$query = "SELECT * FROM collections
+            WHERE user_id = :userId
+        ";
+
+		$stmt = $this->conn->prepare($query);
+
+		$stmt->bindparam(':userId', $this->id);
+
+
+		if ($stmt->execute()) {
+			return $stmt->fetchAll(PDO::FETCH_ASSOC);
+		}
+		print_r($stmt->errorInfo());
+		return FALSE;
+	}
+
 	function create()
 	{
 		$query = "INSERT INTO " . $this->table_name . "
