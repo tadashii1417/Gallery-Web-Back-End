@@ -77,4 +77,29 @@ class Collection
 
 		return FALSE;
 	}
+
+	#####################################################
+	#Date: 11:00 7/12/2019
+	#Author: Dang Bao
+	#In:  
+	#Out: To check if the collection id exits
+	#####################################################
+	function check_exit()
+	{
+		// if no posted password, do not update the password
+		$query = "SELECT * FROM " . $this->table_name . " WHERE id = :id LIMIT 1";
+
+		// prepare the query
+		$stmt = $this->conn->prepare($query);
+
+		// bind the values from the form
+		$stmt->bindParam(':id', $this->id);
+
+		// execute the query
+		if ($stmt->execute()) {
+			return TRUE;
+		}
+
+		return FALSE;
+	}
 }
