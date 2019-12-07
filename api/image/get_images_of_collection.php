@@ -1,10 +1,4 @@
 <?php
-#####################################################
-#Date: 21:00 3/12/2019
-#Author: Dang Bao
-#In:  jwt from client
-#Out: Return all image in database with their owner info.
-#####################################################
 // required headers
 include_once '../../config/header.php';
 // required to encode json web token
