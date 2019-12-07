@@ -11,7 +11,7 @@ class Image
     public $height;
     public $description;
     public $url;
-    public $categoryId;
+    public $category_id;
     // tags
     public $userId;
     public $viewCount = 0;
@@ -43,7 +43,7 @@ class Image
         $stmt->bindParam(':height', $this->height);
         $stmt->bindParam(':description', $this->description);
         $stmt->bindParam(':url', $this->url);
-        $stmt->bindParam(':categoryId', $this->categoryId);
+        $stmt->bindParam(':category_id', $this->category_id);
         $stmt->bindParam(':userId', $this->userId);
 
         if ($stmt->execute()) {

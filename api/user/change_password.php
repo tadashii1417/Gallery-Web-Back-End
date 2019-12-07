@@ -34,7 +34,7 @@ if ( $jwt ) {
 		$decoded = JWT::decode( $jwt, $key, [ 'HS256' ] );
 		$user->id        = $decoded->data->id;
 		$user->password = $data->old_password;
-		if ( $user->updatePassword($data->new_password) ) {
+		if ( $user->update_password($data->new_password) ) {
 			//regenerate jwt
 			$token = [
 				"iss"  => $iss,

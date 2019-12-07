@@ -18,7 +18,7 @@ $data = json_decode( file_get_contents( "php://input" ) );
 
 // set product property values
 $user->username = $data->username;
-$user_exists    = $user->usernameExists();
+$user_exists    = $user->username_exists();
 
 // files for jwt will be here
 include_once '../../config/core.php';

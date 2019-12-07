@@ -10,7 +10,7 @@ class Collection
 	public $id;
 	public $name;
 	public $description;
-	public $userId;
+	public $user_id;
 
 	public function __construct($db)
 	{
@@ -32,12 +32,12 @@ class Collection
 		// sanitize
 		$this->name = htmlspecialchars(strip_tags($this->name));
 		$this->description  = htmlspecialchars(strip_tags($this->description));
-		$this->userId     = htmlspecialchars(strip_tags($this->userId));
+		$this->user_id     = htmlspecialchars(strip_tags($this->user_id));
 
 		// bind param into sql stmt
 		$stmt->bindParam(':name', $this->name);
 		$stmt->bindParam(':description', $this->description);
-		$stmt->bindParam(':user_id', $this->userId);
+		$stmt->bindParam(':user_id', $this->user_id);
 
 		if ($stmt->execute()) {
 			return TRUE;
@@ -63,12 +63,12 @@ class Collection
 		// sanitize
 		$this->name = htmlspecialchars(strip_tags($this->name));
 		$this->description  = htmlspecialchars(strip_tags($this->description));
-		$this->userId     = htmlspecialchars(strip_tags($this->userId));
+		$this->user_id     = htmlspecialchars(strip_tags($this->user_id));
 
 		// bind the values from the form
 		$stmt->bindParam(':name', $this->name);
 		$stmt->bindParam(':description', $this->description);
-		$stmt->bindParam(':user_id', $this->userId);
+		$stmt->bindParam(':user_id', $this->user_id);
 
 		// execute the query
 		if ($stmt->execute()) {

@@ -38,9 +38,9 @@ if ($jwt) {
 
         $user->id = $decoded->data->id;
 
-        $fetchedCollections = $user->getCollections();
-        if (isset($fetchedCollections)) {
-            echo json_encode(["collections" => $fetchedCollections]);
+        $fetched_collections = $user->get_collections();
+        if (isset($fetched_collections)) {
+            echo json_encode(["collections" => $fetched_collections]);
         } else {
             echo json_encode(["message" => "can't fetch collections"]);
         }

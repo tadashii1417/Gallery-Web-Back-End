@@ -50,7 +50,7 @@ if (($jwt <> "") and ($image_id <> "")) {
         $user->username = $decoded->data->username;
 
         #Check if the username exits
-        $check_if_user_exit = $user->usernameExists();
+        $check_if_user_exit = $user->username_exists();
 
         #If the username exits, let do more
         if ($check_if_user_exit) {

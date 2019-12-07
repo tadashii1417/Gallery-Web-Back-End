@@ -38,7 +38,7 @@ if ($jwt) {
 
         $user->id = $decoded->data->id;
 
-        $fetchedImages = $user->getLikedImages();
+        $fetchedImages = $user->get_liked_images();
 
         if (isset($fetchedImages)) {
             echo json_encode(["images" => $fetchedImages]);

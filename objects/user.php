@@ -22,7 +22,7 @@ class User
 	}
 
 
-	public function getUploadedImages()
+	public function get_uploaded_images()
 	{
 		$query = "SELECT * FROM images
             WHERE user_id = :user_id
@@ -38,7 +38,7 @@ class User
 		return FALSE;
 	}
 
-	public function getLikedImages()
+	public function get_liked_images()
 	{
 		$query = 'SELECT d2.* FROM likes AS d1, images AS d2
 		WHERE (d1.user_id = :user_id) AND (d1.image_id = d2.id)';
@@ -68,7 +68,7 @@ class User
 		return FALSE;
 	}
 
-	public function getCollections()
+	public function get_collections()
 	{
 		$query = "SELECT * FROM collections
             WHERE user_id = :user_id
@@ -128,7 +128,7 @@ class User
 		return FALSE;
 	}
 
-	function usernameExists()
+	function username_exists()
 	{
 		$query = "SELECT * FROM " . $this->table_name . "
             WHERE username = ?
@@ -156,7 +156,7 @@ class User
 		return FALSE;
 	}
 
-	public function checkPassword() {
+	public function check_password() {
 		$query = "SELECT password FROM " . $this->table_name . "
 			WHERE id = :id;
 		";
@@ -174,8 +174,8 @@ class User
 		return FALSE;
 	}
 
-	public function updatePassword($new_password) {
-		if ($this->checkPassword()) {
+	public function update_password($new_password) {
+		if ($this->check_password()) {
 			$query = "UPDATE " . $this->table_name . "
 				SET
 					password = :password
