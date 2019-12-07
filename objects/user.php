@@ -27,7 +27,7 @@ class User
 	public function get_uploaded_images()
 	{
 		$query = "SELECT * FROM images
-            WHERE user_id = :user_id
+            WHERE user_id = :user_id AND status = 1;
         ";
 
 		$stmt = $this->conn->prepare($query);
@@ -57,7 +57,7 @@ class User
 		}
 
 		$query = "SELECT * FROM images
-            WHERE user_id = :user_id
+            WHERE user_id = :user_id AND status = 1;
         ";
 
 		$stmt = $this->conn->prepare($query);
