@@ -1,11 +1,6 @@
 <?php
 // required headers
-header("Access-Control-Allow-Origin: *");
-header("Content-Type: application/json; charset=UTF-8");
-header("Access-Control-Allow-Methods: POST");
-header("Access-Control-Max-Age: 3600");
-header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
-
+include_once '../../config/header.php';
 // required to encode json web token
 include_once '../../config/core.php';
 include_once '../../libs/php-jwt-master/src/BeforeValidException.php';
@@ -61,13 +56,10 @@ if ($jwt) {
                 } else {
                     echo json_encode(["message" => "Fail to insert into database"]);
                 }
-
             } else {
                 echo json_encode(["message" => "Upload fail"]);
             }
         }
-
-
     } catch (Exception $e) {
         http_response_code(401);
         echo json_encode([
@@ -79,5 +71,3 @@ if ($jwt) {
     http_response_code(401);
     echo json_encode(["message" => "Access denied."]);
 }
-
-

@@ -1,11 +1,6 @@
 <?php
 // required headers
-header( "Access-Control-Allow-Origin: *" );
-header( "Content-Type: application/json; charset=UTF-8" );
-header( "Access-Control-Allow-Methods: POST" );
-header( "Access-Control-Max-Age: 3600" );
-header( "Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With" );
-
+include_once '../../config/header.php';
 // required to encode json web token
 include_once '../../config/core.php';
 include_once '../../libs/php-jwt-master/src/BeforeValidException.php';
@@ -21,24 +16,24 @@ include_once '../../objects/user.php';
 $database = new Database();
 $db       = $database->getConnection();
 
-$user = new User( $db );
+$user = new User($db);
 
-$data = json_decode( file_get_contents( "php://input" ) );
+$data = json_decode(file_get_contents("php://input"));
 
 // get jwt
-$jwt = isset( $data->jwt ) ? $data->jwt : "";
+$jwt = isset($data->jwt) ? $data->jwt : "";
 
 // if jwt is not empty
-if ( $jwt ) {
+if ($jwt) {
 	try {
-		$decoded = JWT::decode( $jwt, $key, [ 'HS256' ] );
+		$decoded = JWT::decode($jwt, $key, ['HS256']);
 
 		$user->id        = $decoded->data->id;
 		$user->firstname = $data->firstname;
 		$user->lastname  = $data->lastname;
 		$user->email     = $data->email;
 		$user->description = $data->description;
-		if ( $user->update() ) {
+		if ($user->update()) {
 			//regenerate jwt
 			$token = [
 				"iss"  => $iss,
@@ -55,29 +50,26 @@ if ( $jwt ) {
 					"description" => $user->description,
 				],
 			];
-			$jwt   = JWT::encode( $token, $key );
-			http_response_code( 200 );
+			$jwt   = JWT::encode($token, $key);
+			http_response_code(200);
 			echo json_encode(
 				[
 					"message" => "User was updated.",
 					"jwt"     => $jwt,
 				]
 			);
-
 		} else {
-			http_response_code( 401 );
-			echo json_encode( [ "message" => "Unable to update user." ] );
+			http_response_code(401);
+			echo json_encode(["message" => "Unable to update user."]);
 		}
-	}
-	catch ( Exception $e ) {
-		http_response_code( 401 );
-		echo json_encode( [
+	} catch (Exception $e) {
+		http_response_code(401);
+		echo json_encode([
 			"message" => "Access denied.",
 			"error"   => $e->getMessage(),
-		] );
+		]);
 	}
 } else {
-	http_response_code( 401 );
-	echo json_encode( [ "message" => "Access denied." ] );
+	http_response_code(401);
+	echo json_encode(["message" => "Access denied."]);
 }
-

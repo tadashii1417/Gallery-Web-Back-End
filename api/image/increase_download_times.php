@@ -1,18 +1,13 @@
 <?php
-    #####################################################
-    #Date: 16:00 4/12/2019
-    #Author: Dang Bao
-    #In:
-    #Out: Client call this API to increase number of download
-    #     times of an image in database by one
-    #####################################################
+#####################################################
+#Date: 16:00 4/12/2019
+#Author: Dang Bao
+#In:
+#Out: Client call this API to increase number of download
+#     times of an image in database by one
+#####################################################
 // required headers
-header("Access-Control-Allow-Origin: *");
-header("Content-Type: application/json; charset=UTF-8");
-header("Access-Control-Allow-Methods: POST");
-header("Access-Control-Max-Age: 3600");
-header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
-
+include_once '../../config/header.php';
 // required to encode json web token
 include_once '../../config/core.php';
 include_once '../../libs/php-jwt-master/src/BeforeValidException.php';
