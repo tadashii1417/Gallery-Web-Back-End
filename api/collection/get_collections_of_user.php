@@ -28,12 +28,11 @@ try {
     } else {
         http_response_code(400);
         echo json_encode([
-            "message" => "Can't fetch images.",
-            "error" => $stmt->errorInfo()
+            "message" => "Can't fetch collections.",
         ]);
     }
 } catch (Exception $e) {
-    http_response_code(401);
+    http_response_code(500);
     echo json_encode([
         "message" => "Can't fetch collections.",
         "error" => $e->getMessage(),
