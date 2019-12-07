@@ -18,13 +18,17 @@ $data = json_decode(file_get_contents("php://input"));
 $database = new Database();
 $db = $database->getConnection();
 
-$data = json_decode(file_get_contents("php://input"));
+// $data = json_decode(file_get_contents("php://input"));
+if (!isset($_GET['collection_id'])) {
+    http_respones_code(400);
+    return (json_encode(['message' => 'missing collection_id']));
+}
 
 try {
     $query = 'SELECT d2.* FROM collections_images AS d1, images AS d2
     WHERE (collection_id = :collection_id) AND (d1.image_id = d2.id)';
     $stmt = $db->prepare($query);
-    $stmt->bindParam(':collection_id', $data->collection_id);
+    $stmt->bindParam(':collection_id', $_GET['collection_id']);
     if ($stmt->execute()) {
         $ret = array();
         while ($row = $stmt->fetchObject()) {
