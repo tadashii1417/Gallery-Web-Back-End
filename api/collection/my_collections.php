@@ -7,6 +7,7 @@
 #####################################################
 // required headers
 include_once '../../config/header.php';
+
 // required to encode json web token
 include_once '../../config/core.php';
 include_once '../../libs/php-jwt-master/src/BeforeValidException.php';
@@ -33,12 +34,11 @@ if ($jwt) {
 
         $user->id = $decoded->data->id;
 
-        $fetchedImages = $user->get_uploaded_images();
-
-        if (isset($fetchedImages)) {
-            echo json_encode(["images" => $fetchedImages]);
+        $fetched_collections = $user->get_collections();
+        if (isset($fetched_collections)) {
+            echo json_encode(["collections" => $fetched_collections]);
         } else {
-            echo json_encode(["message" => "can't fetch images"]);
+            echo json_encode(["message" => "can't fetch collections"]);
         }
     } catch (Exception $e) {
         http_response_code(401);

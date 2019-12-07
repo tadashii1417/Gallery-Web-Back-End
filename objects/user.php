@@ -15,6 +15,7 @@ class User
 	public $password;
 	public $avatarUrl = "https://cdn0.iconfinder.com/data/icons/avatars-6/500/Avatar_boy_man_people_account_client_male_person_user_work_sport_beard_team_glasses-512.png";
 	public $description;
+	public $role;
 
 	public function __construct($db)
 	{
@@ -22,15 +23,15 @@ class User
 	}
 
 
-	public function getUploadedImages()
+	public function get_uploaded_images()
 	{
 		$query = "SELECT * FROM images
-            WHERE user_id = :userId
+            WHERE user_id = :user_id
         ";
 
 		$stmt = $this->conn->prepare($query);
 
-		$stmt->bindparam(':userId', $this->id);
+		$stmt->bindparam(':user_id', $this->id);
 
 		if ($stmt->execute()) {
 			return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -38,15 +39,45 @@ class User
 		return FALSE;
 	}
 
-	public function getCollections()
+	public function get_liked_images()
 	{
-		$query = "SELECT * FROM collections
-            WHERE user_id = :userId
+		$query = 'SELECT d2.* FROM likes AS d1, images AS d2
+		WHERE (d1.user_id = :user_id) AND (d1.image_id = d2.id)';
+		$stmt = $this->conn->prepare($query);
+		$stmt->bindParam(':user_id', $this->id);
+		if ($stmt->execute()) {
+			return $stmt->fetchAll(PDO::FETCH_ASSOC);
+		} else {
+			http_response_code(400);
+			echo json_encode([
+				"message" => "Can't fetch images.",
+				"error" => $stmt->errorInfo()
+			]);
+		}
+
+		$query = "SELECT * FROM images
+            WHERE user_id = :user_id
         ";
 
 		$stmt = $this->conn->prepare($query);
 
-		$stmt->bindparam(':userId', $this->id);
+		$stmt->bindparam(':user_id', $this->id);
+
+		if ($stmt->execute()) {
+			return $stmt->fetchAll(PDO::FETCH_ASSOC);
+		}
+		return FALSE;
+	}
+
+	public function get_collections()
+	{
+		$query = "SELECT * FROM collections
+            WHERE user_id = :user_id
+        ";
+
+		$stmt = $this->conn->prepare($query);
+
+		$stmt->bindparam(':user_id', $this->id);
 
 
 		if ($stmt->execute()) {
@@ -98,7 +129,7 @@ class User
 		return FALSE;
 	}
 
-	function usernameExists()
+	function username_exists()
 	{
 		$query = "SELECT * FROM " . $this->table_name . "
             WHERE username = ?
@@ -119,6 +150,7 @@ class User
 			$this->email     = $row['email'];
 			$this->avatarUrl = $row['avatarUrl'];
 			$this->description = $row['description'];
+			$this->role = $row['role'];
 
 			return TRUE;
 		}
@@ -126,6 +158,48 @@ class User
 		return FALSE;
 	}
 
+	public function check_password() {
+		$query = "SELECT password FROM " . $this->table_name . "
+			WHERE id = :id;
+		";
+
+		$stmt = $this->conn->prepare($query);
+
+		$stmt->bindParam(':id', $this->id);
+		if ($stmt->execute()) {	
+			$target_password = $stmt->fetchObject()->password;
+			if (password_verify($this->password, $target_password)) {
+				return TRUE;
+			}			
+			return FALSE;
+		}
+		return FALSE;
+	}
+
+	public function update_password($new_password) {
+		if ($this->check_password()) {
+			$query = "UPDATE " . $this->table_name . "
+				SET
+					password = :password
+				WHERE id = :id;
+			";
+
+			$stmt = $this->conn->prepare($query);
+			
+			$password_hash = password_hash($new_password, PASSWORD_BCRYPT);
+
+			$stmt->bindParam(':password', $password_hash);
+			$stmt->bindParam(':id', $this->id);
+
+			if ($stmt->execute()) {
+				return TRUE;
+			}
+			return FALSE;
+		} 
+		return FALSE;
+
+
+	}
 	public function update()
 	{
 		// if password needs to be updated

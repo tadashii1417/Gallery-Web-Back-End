@@ -6,7 +6,11 @@
 #Out: Return all image in database with their owner info.
 #####################################################
 // required headers
-include_once '../../config/header.php';
+header("Access-Control-Allow-Origin: *");
+header("Content-Type: application/json; charset=UTF-8");
+header("Access-Control-Allow-Methods: POST");
+header("Access-Control-Max-Age: 3600");
+header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
 // required to encode json web token
 include_once '../../config/core.php';
@@ -25,20 +29,21 @@ $data = json_decode(file_get_contents("php://input"));
 $database = new Database();
 $db = $database->getConnection();
 
-$user = new User($db);
 $jwt = isset($data->jwt) ? $data->jwt : "";
 
 if ($jwt) {
     try {
         $decoded = JWT::decode($jwt, $key, ['HS256']);
-
-        $user->id = $decoded->data->id;
-
-        $fetched_collections = $user->getCollections();
-        if (isset($fetched_collections)) {
-            echo json_encode(["collections" => $fetched_collections]);
+        $query = 'INSERT INTO likes VALUES (:user_id, :image_id);';
+        $stmt = $db->prepare($query);
+        $stmt->bindParam(':user_id', $decoded->data->id); // user_id
+        $stmt->bindParam(':image_id', $data->image_id);
+        if ($stmt->execute()) {
+            echo json_encode(["message" => "successful update"]);
         } else {
-            echo json_encode(["message" => "can't fetch collections"]);
+            http_response_code(400);
+            print_r($stmt->errorInfo());
+            echo json_encode(["message" => "can't complete operation"]);
         }
     } catch (Exception $e) {
         http_response_code(401);
