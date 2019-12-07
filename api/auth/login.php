@@ -33,34 +33,39 @@ use \Firebase\JWT\JWT;
 echo $user_exists;
 
 if ($user_exists && password_verify($data->password, $user->password)) {
-	$token = [
-		"iss"  => $iss,
-		"aud"  => $aud,
-		"iat"  => $iat,
-		"nbf"  => $nbf,
-		"data" => [
-			"id"        => $user->id,
-			"username"  => $user->username,
-			"email"     => $user->email,
-			"firstname" => $user->firstname,
-			"lastname"  => $user->lastname,
-			"avatarUrl" => $user->avatarUrl,
-			"role" => $user->role,
-			"status" => $user->status
-		],
-	];
+	if ($user->status == "1") {
+		$token = [
+			"iss"  => $iss,
+			"aud"  => $aud,
+			"iat"  => $iat,
+			"nbf"  => $nbf,
+			"data" => [
+				"id"        => $user->id,
+				"username"  => $user->username,
+				"email"     => $user->email,
+				"firstname" => $user->firstname,
+				"lastname"  => $user->lastname,
+				"avatarUrl" => $user->avatarUrl,
+				"role" => $user->role,
+				"status" => $user->status
+			],
+		];
 
-	// set response code
-	http_response_code(200);
+		// set response code
+		http_response_code(200);
 
-	// generate jwt
-	$jwt = JWT::encode($token, $key);
-	echo json_encode(
-		[
-			"message" => "Successful login.",
-			"jwt"     => $jwt,
-		]
-	);
+		// generate jwt
+		$jwt = JWT::encode($token, $key);
+		echo json_encode(
+			[
+				"message" => "Successful login.",
+				"jwt"     => $jwt,
+			]
+		);
+	} else {
+		http_response_code(403);
+		echo json_encode(["message" => "This account has been banned."]);
+	}
 } else {
 	http_response_code(401);
 	echo json_encode(["message" => "Login failed."]);
