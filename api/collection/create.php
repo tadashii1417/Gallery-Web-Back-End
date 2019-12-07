@@ -6,6 +6,14 @@ header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
+// required to encode json web token
+include_once '../../config/core.php';
+include_once '../../libs/php-jwt-master/src/BeforeValidException.php';
+include_once '../../libs/php-jwt-master/src/ExpiredException.php';
+include_once '../../libs/php-jwt-master/src/SignatureInvalidException.php';
+include_once '../../libs/php-jwt-master/src/JWT.php';
+
+use \Firebase\JWT\JWT;
 include_once '../../config/database.php';
 include_once '../../objects/collection.php';
 // get database connection
@@ -18,15 +26,25 @@ $collection = new Collection($db);
 // get posted data
 $data = json_decode(file_get_contents("php://input"));
 
+// validate user input
+if (!isset($data->jwt)) {
+    http_response_code(403);
+    echo json_encode(array("message" => "Access denied."));
+}
+
+$jwt = $data->jwt;
+$decoded = JWT::decode($jwt, $key, ['HS256']);
+
+
 // validate data
-if (!isset($data->name) || !isset($data->user_id)) {
+if (!isset($data->name)) {
     http_response_code(422);
     echo json_encode(array("message" => "Unable to create collection."));
 }
 
 $collection->name = $data->name;
 $collection->description = isset($data->description) ? $data->description : "";
-$collection->userId= $data->user_id;
+$collection->user_id= $decoded->data->id;
 // TODO: check if username exists.
 
 
