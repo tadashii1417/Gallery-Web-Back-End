@@ -15,6 +15,8 @@ class User
 	public $password;
 	public $avatarUrl = "https://cdn0.iconfinder.com/data/icons/avatars-6/500/Avatar_boy_man_people_account_client_male_person_user_work_sport_beard_team_glasses-512.png";
 	public $description;
+	public $status;
+	public $role;
 
 	public function __construct($db)
 	{
@@ -66,7 +68,9 @@ class User
                 username = :username,
                 password = :password,
 				avatarUrl = :avatarUrl,
-				description = :description
+				description = :description,
+				role = :role,
+				status = :status;
                 ";
 
 		$stmt = $this->conn->prepare($query);
@@ -86,6 +90,8 @@ class User
 		$stmt->bindParam(':username', $this->username);
 		$stmt->bindParam(':avatarUrl', $this->avatarUrl);
 		$stmt->bindParam(':description', $this->description);
+		$stmt->bindParam(':role', $this->role);
+		$stmt->bindParam(':status', $this->status);
 
 		// hash the password before saving to database
 		$password_hash = password_hash($this->password, PASSWORD_BCRYPT);
@@ -98,7 +104,7 @@ class User
 		return FALSE;
 	}
 
-	function usernameExists()
+	function username_exists()
 	{
 		$query = "SELECT * FROM " . $this->table_name . "
             WHERE username = ?
@@ -119,6 +125,8 @@ class User
 			$this->email     = $row['email'];
 			$this->avatarUrl = $row['avatarUrl'];
 			$this->description = $row['description'];
+			$this->role = $row['role'];
+			$this->status = $row['status'];
 
 			return TRUE;
 		}
@@ -189,6 +197,46 @@ class User
 
 		if ($stmt->execute()) {
 			return $stmt->fetchAll(PDO::FETCH_ASSOC);
+		}
+		return FALSE;
+	}
+
+	#####################################################
+	#Date: 12:30 7/12/2019
+	#Author: Dang Bao
+	#In:
+	#Out: Change status of user to 0
+	#####################################################
+	function ban_user()
+	{
+		$query = "UPDATE " . $this->table_name . " SET status = :status WHERE id = :id";
+		$stmt = $this->conn->prepare($query);
+		$this->status = 0;
+		$stmt->bindParam(':status', $this->status);
+		$stmt->bindParam(':id', $this->id);
+
+		if ($stmt->execute()) {
+			return TRUE;
+		}
+		return FALSE;
+	}
+
+	#####################################################
+	#Date: 13:30 7/12/2019
+	#Author: Dang Bao
+	#In:
+	#Out: Change status of user to 1
+	#####################################################
+	function un_ban_user()
+	{
+		$query = "UPDATE " . $this->table_name . " SET status = :status WHERE id = :id";
+		$stmt = $this->conn->prepare($query);
+		$this->status = 1;
+		$stmt->bindParam(':status', $this->status);
+		$stmt->bindParam(':id', $this->id);
+
+		if ($stmt->execute()) {
+			return TRUE;
 		}
 		return FALSE;
 	}

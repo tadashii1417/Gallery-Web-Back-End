@@ -18,11 +18,8 @@ class CollectionImage
 
     function insert_image_to_collection()
     {
-        $query = "INSERT INTO " . $this->table_name . "
-            SET
-                collection_id = :collection_id,
-                image_id = :image_id
-                ";
+        #$query = "INSERT INTO " . $this->table_name . " SET collection_id = :collection_id, image_id = :image_id";
+        $query = "INSERT INTO " . $this->table_name . "(`collection_id`, `image_id`) VALUES (:collection_id, :image_id)";
 
         $stmt = $this->conn->prepare($query);
         // bind param into sql stmt
