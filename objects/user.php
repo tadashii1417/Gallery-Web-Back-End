@@ -41,7 +41,7 @@ class User
 
 	public function get_liked_images()
 	{
-		$query = 'SELECT d2.* FROM likes AS d1, images AS d2
+		$query = 'SELECT d2.* FROM loves AS d1, images AS d2
 		WHERE (d1.user_id = :user_id) AND (d1.image_id = d2.id)';
 		$stmt = $this->conn->prepare($query);
 		$stmt->bindParam(':user_id', $this->id);

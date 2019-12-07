@@ -34,7 +34,7 @@ $jwt = isset($data->jwt) ? $data->jwt : "";
 if ($jwt) {
     try {
         $decoded = JWT::decode($jwt, $key, ['HS256']);
-        $query = 'INSERT INTO likes VALUES (:user_id, :image_id);';
+        $query = 'INSERT INTO loves VALUES (:user_id, :image_id);';
         $stmt = $db->prepare($query);
         $stmt->bindParam(':user_id', $decoded->data->id); // user_id
         $stmt->bindParam(':image_id', $data->image_id);
