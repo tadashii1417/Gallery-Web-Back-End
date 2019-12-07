@@ -128,7 +128,20 @@ class User
 
 		return FALSE;
 	}
-
+	function change_avatar($new_avatar_path) {
+		$query = "UPDATE " . $this->table_name . "
+			SET avatarUrl = :avatar_url
+			WHERE id = :id
+		";
+		$stmt = $this->conn->prepare($query);
+		$stmt->bindParam(":avatar_url", $new_avatar_path);
+		$stmt->bindParam(":id", $this->id);
+		if ($stmt->execute()) {
+			return TRUE;
+		} else {
+			return FALSE;
+		}
+	}
 	function username_exists()
 	{
 		$query = "SELECT * FROM " . $this->table_name . "
