@@ -53,7 +53,8 @@ if ( $jwt ) {
 				unlink($new_file_path);
 			   	move_uploaded_file($file_tmp, $new_file_path);
 			}else{
-				return(json_encode(["errors" => $errors]));
+				echo json_encode(["errors" => $errors]);
+				return;
 			}
 			$decoded = JWT::decode( $jwt, $key, [ 'HS256' ] );
 			$user->id        = $decoded->data->id;

@@ -25,7 +25,8 @@ if ($jwt) {
 
         if (!isset($_POST['category_id'])) {
             http_response_code(400);
-            return(json_encode(["message" => "missing category_id"]));
+            echo json_encode(["message" => "missing category_id"]);
+            return;
         }
 
         if (is_uploaded_file($_FILES['image']['tmp_name'])) {
