@@ -22,7 +22,7 @@ $data = json_decode(file_get_contents("php://input"));
 
 try {
     $query = 'SELECT d2.* FROM collections_images AS d1, images AS d2
-    WHERE (collection_id = :collection_id) AND (d1.image_id = d2.id)';
+    WHERE (collection_id = :collection_id) AND (d1.image_id = d2.id) AND (d2.status = 1)';
     $stmt = $db->prepare($query);
     $stmt->bindParam(':collection_id', $data->collection_id);
     if ($stmt->execute()) {

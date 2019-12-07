@@ -40,26 +40,19 @@ if ($category_id) {
         #Check if the return list is nothing (no image with this category_id)
         $size_of_list_image = sizeof($all_image_return);
         if ($size_of_list_image > 0) {
-            if ($all_image_return) {
-
-                #This loop to get all owner info of all result picture
-                for ($temp_count = 0; $temp_count < $size_of_list_image; $temp_count++) {
-                    $temp_user = new User($db);
-                    $temp_user->id = $all_image_return[$temp_count]['user_id'];
-                    #Create an object for owner
-                    $temp_owner = ["owner" => $temp_user->get_owner_info()];
-                    #Add owner to picture info
-                    $all_image_return[$temp_count] = array_merge($all_image_return[$temp_count], $temp_owner);
-                    unset($temp_user);
-                }
-                #If it can get some images, retutn it.
-                http_response_code(200);
-                echo json_encode(["images" => $all_image_return]);
-            } else {
-                #Return empty list
-                http_response_code(401);
-                echo json_encode(["message" => "Access denied."]);
+            #This loop to get all owner info of all result picture
+            for ($temp_count = 0; $temp_count < $size_of_list_image; $temp_count++) {
+                $temp_user = new User($db);
+                $temp_user->id = $all_image_return[$temp_count]['user_id'];
+                #Create an object for owner
+                $temp_owner = ["owner" => $temp_user->get_owner_info()];
+                #Add owner to picture info
+                $all_image_return[$temp_count] = array_merge($all_image_return[$temp_count], $temp_owner);
+                unset($temp_user);
             }
+            #If it can get some images, retutn it.
+            http_response_code(200);
+            echo json_encode(["images" => $all_image_return]);
         } else {
             http_response_code(200);
             echo json_encode(["images" => ""]);
@@ -67,7 +60,7 @@ if ($category_id) {
     } catch (Exception $e) {
         http_response_code(401);
         echo json_encode([
-            "message" => "Access denied.",
+            "message" => "Error when process.",
             "error" => $e->getMessage()
         ]);
     }
