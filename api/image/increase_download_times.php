@@ -21,14 +21,13 @@ include_once '../../config/database.php';
 include_once '../../objects/image.php';
 
 #Get input jwt
-$data = json_decode(file_get_contents("php://input"));
 
 #Create connection to database
 $database = new Database();
 $db = $database->getConnection();
 
 #Check the input
-$id = isset($data->id) ? $data->id : "";
+$id = $_GET['id'];
 
 if ($id) {
     try {
