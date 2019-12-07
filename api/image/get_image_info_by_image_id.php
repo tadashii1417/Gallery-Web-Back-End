@@ -21,13 +21,11 @@ include_once '../../config/database.php';
 include_once '../../objects/image.php';
 include_once '../../objects/user.php';
 
-$data = json_decode(file_get_contents("php://input"));
 
 #Create connection to database
 $database = new Database();
 $db = $database->getConnection();
-
-$image_id = isset($data->id) ? $data->id : "";
+$image_id = $_GET['id'];
 
 if ($image_id) {
     try {

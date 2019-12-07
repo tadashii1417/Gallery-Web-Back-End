@@ -18,7 +18,6 @@ $data = json_decode(file_get_contents("php://input"));
 $database = new Database();
 $db = $database->getConnection();
 
-$data = json_decode(file_get_contents("php://input"));
 
 try {
     $query = 'SELECT d2.* FROM collections_images AS d1, images AS d2
