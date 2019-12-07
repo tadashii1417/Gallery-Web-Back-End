@@ -15,6 +15,7 @@ class User
 	public $password;
 	public $avatarUrl = "https://cdn0.iconfinder.com/data/icons/avatars-6/500/Avatar_boy_man_people_account_client_male_person_user_work_sport_beard_team_glasses-512.png";
 	public $description;
+	public $role;
 
 	public function __construct($db)
 	{
@@ -149,6 +150,7 @@ class User
 			$this->email     = $row['email'];
 			$this->avatarUrl = $row['avatarUrl'];
 			$this->description = $row['description'];
+			$this->role = $row['role'];
 
 			return TRUE;
 		}

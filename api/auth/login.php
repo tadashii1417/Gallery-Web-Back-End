@@ -45,6 +45,7 @@ if ( $user_exists && password_verify( $data->password, $user->password ) ) {
 			"firstname" => $user->firstname,
 			"lastname"  => $user->lastname,
 			"avatarUrl" => $user->avatarUrl,
+			"role" => $user->role,
 		],
 	];
 

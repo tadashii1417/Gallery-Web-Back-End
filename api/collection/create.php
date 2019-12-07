@@ -26,15 +26,15 @@ $collection = new Collection($db);
 // get posted data
 $data = json_decode(file_get_contents("php://input"));
 
-// validate user input
-if (!isset($data->jwt)) {
+// authenticate
+$jwt = $data->jwt;
+
+try {
+    $decoded = JWT::decode($jwt, $key, ['HS256']);
+} catch(Exception $e) {
     http_response_code(403);
     echo json_encode(array("message" => "Access denied."));
 }
-
-$jwt = $data->jwt;
-$decoded = JWT::decode($jwt, $key, ['HS256']);
-
 
 // validate data
 if (!isset($data->name)) {
