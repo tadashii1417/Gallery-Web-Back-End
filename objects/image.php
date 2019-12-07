@@ -13,7 +13,7 @@ class Image
     public $url;
     public $category_id;
     // tags
-    public $userId;
+    public $user_id;
     public $viewCount = 0;
     public $download = 0;
     public $love = 0;
@@ -32,8 +32,8 @@ class Image
                 height = :height,
                 description = :description,
                 url = :url,
-                category_id = :categoryId,
-                user_id = :userId
+                category_id = :category_id,
+                user_id = :user_id
                 ";
         $stmt = $this->conn->prepare($query);
 
@@ -44,7 +44,7 @@ class Image
         $stmt->bindParam(':description', $this->description);
         $stmt->bindParam(':url', $this->url);
         $stmt->bindParam(':category_id', $this->category_id);
-        $stmt->bindParam(':userId', $this->userId);
+        $stmt->bindParam(':user_id', $this->user_id);
 
         if ($stmt->execute()) {
             return TRUE;

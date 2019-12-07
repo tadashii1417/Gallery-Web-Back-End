@@ -23,6 +23,11 @@ if ($jwt) {
     try {
         $decoded = JWT::decode($jwt, $key, ['HS256']);
 
+        if (!isset($_POST['category_id'])) {
+            http_response_code(400);
+            return(json_encode(["message" => "missing category_id"]));
+        }
+
         if (is_uploaded_file($_FILES['image']['tmp_name'])) {
             $tmp_file = $_FILES['image']['tmp_name'];
             $img_info = getimagesize($tmp_file);
@@ -37,13 +42,13 @@ if ($jwt) {
 
             if (move_uploaded_file($tmp_file, $upload_dir)) {
 
-                $image->userId = $decoded->data->id;
+                $image->user_id = $decoded->data->id;
                 $image->size = $img_size;
                 $image->width = $img_info[0];
                 $image->height = $img_info[1];
                 $image->url = "/upload/images/" . $url;
-                $image->categoryId = $_POST['category_id'];
-                $image->description = $_POST['description'];
+                $image->category_id = $_POST['category_id'];
+                $image->description = isset($_POST['description']) ? htmlspecialchars(strip_tags($_POST['description'])) : "";
 
                 if ($image->create()) {
                     http_response_code(200);
@@ -54,6 +59,7 @@ if ($jwt) {
                         ]
                     );
                 } else {
+                    http_response_code(500);
                     echo json_encode(["message" => "Fail to insert into database"]);
                 }
             } else {
