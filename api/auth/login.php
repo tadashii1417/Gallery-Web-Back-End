@@ -58,7 +58,7 @@ if ($user_exists && password_verify($data->password, $user->password)) {
 		);
 	} else {
 		http_response_code(403);
-		echo json_encode(["message" => "This account has been banned."]);
+		echo json_encode(["message" => "This account is being banned by admin."]);
 	}
 } else {
 	http_response_code(401);
