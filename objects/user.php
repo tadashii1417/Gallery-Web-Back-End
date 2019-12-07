@@ -25,12 +25,42 @@ class User
 	public function getUploadedImages()
 	{
 		$query = "SELECT * FROM images
-            WHERE user_id = :userId
+            WHERE user_id = :user_id
         ";
 
 		$stmt = $this->conn->prepare($query);
 
-		$stmt->bindparam(':userId', $this->id);
+		$stmt->bindparam(':user_id', $this->id);
+
+		if ($stmt->execute()) {
+			return $stmt->fetchAll(PDO::FETCH_ASSOC);
+		}
+		return FALSE;
+	}
+
+	public function getLikedImages()
+	{
+		$query = 'SELECT d2.* FROM likes AS d1, images AS d2
+		WHERE (d1.user_id = :user_id) AND (d1.image_id = d2.id)';
+		$stmt = $this->conn->prepare($query);
+		$stmt->bindParam(':user_id', $this->id);
+		if ($stmt->execute()) {
+			return $stmt->fetchAll(PDO::FETCH_ASSOC);
+		} else {
+			http_response_code(400);
+			echo json_encode([
+				"message" => "Can't fetch images.",
+				"error" => $stmt->errorInfo()
+			]);
+		}
+
+		$query = "SELECT * FROM images
+            WHERE user_id = :user_id
+        ";
+
+		$stmt = $this->conn->prepare($query);
+
+		$stmt->bindparam(':user_id', $this->id);
 
 		if ($stmt->execute()) {
 			return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -41,12 +71,12 @@ class User
 	public function getCollections()
 	{
 		$query = "SELECT * FROM collections
-            WHERE user_id = :userId
+            WHERE user_id = :user_id
         ";
 
 		$stmt = $this->conn->prepare($query);
 
-		$stmt->bindparam(':userId', $this->id);
+		$stmt->bindparam(':user_id', $this->id);
 
 
 		if ($stmt->execute()) {
@@ -126,6 +156,48 @@ class User
 		return FALSE;
 	}
 
+	public function checkPassword() {
+		$query = "SELECT password FROM " . $this->table_name . "
+			WHERE id = :id;
+		";
+
+		$stmt = $this->conn->prepare($query);
+
+		$stmt->bindParam(':id', $this->id);
+		if ($stmt->execute()) {	
+			$target_password = $stmt->fetchObject()->password;
+			if (password_verify($this->password, $target_password)) {
+				return TRUE;
+			}			
+			return FALSE;
+		}
+		return FALSE;
+	}
+
+	public function updatePassword($new_password) {
+		if ($this->checkPassword()) {
+			$query = "UPDATE " . $this->table_name . "
+				SET
+					password = :password
+				WHERE id = :id;
+			";
+
+			$stmt = $this->conn->prepare($query);
+			
+			$password_hash = password_hash($new_password, PASSWORD_BCRYPT);
+
+			$stmt->bindParam(':password', $password_hash);
+			$stmt->bindParam(':id', $this->id);
+
+			if ($stmt->execute()) {
+				return TRUE;
+			}
+			return FALSE;
+		} 
+		return FALSE;
+
+
+	}
 	public function update()
 	{
 		// if password needs to be updated
