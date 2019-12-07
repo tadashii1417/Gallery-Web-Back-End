@@ -21,13 +21,11 @@ include_once '../../config/database.php';
 include_once '../../objects/image.php';
 include_once '../../objects/user.php';
 
-$data = json_decode(file_get_contents("php://input"));
+$category_id = $_GET['id'];
 
 #Create connection to database
 $database = new Database();
 $db = $database->getConnection();
-
-$category_id = isset($data->id) ? $data->id : "";
 
 if ($category_id) {
     try {
