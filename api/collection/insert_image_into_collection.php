@@ -40,7 +40,7 @@ if (($collection_id <> "") and ($image_id <> "")) {
     try {
         $image->id = $image_id;
         $collection->id = $collection_id;
-        if (($image->checkExit()) and ($collection->checkExit())) {
+        if (($image->check_exit()) and ($collection->check_exit())) {
             //regenerate jwt
 
             $collection_image->collection_id = $collection_id;
@@ -50,11 +50,11 @@ if (($collection_id <> "") and ($image_id <> "")) {
                 http_response_code(200);
             } else {
                 http_response_code(401);
-                echo json_encode(["message" => "Unable to insert data."]);
+                echo json_encode(["message" => "Unable to insert data. Duplicate."]);
             }
         } else {
             http_response_code(401);
-            echo json_encode(["message" => "Unable to insert data."]);
+            echo json_encode(["message" => "Unable to insert data. Something wrong."]);
         }
     } catch (Exception $e) {
         http_response_code(401);

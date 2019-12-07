@@ -28,7 +28,7 @@ $database = new Database();
 $db = $database->getConnection();
 
 #Check the input
-$id = isset($data->id) ? $data->id : "";
+$id = $_GET['id'];
 
 if ($id) {
     try {

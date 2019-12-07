@@ -17,6 +17,7 @@ class Image
     public $viewCount = 0;
     public $download = 0;
     public $love = 0;
+    public $status = 0;
 
     public function __construct($db)
     {
@@ -60,7 +61,7 @@ class Image
     #####################################################
     function get_all_images()
     {
-        $query = "SELECT * FROM " . $this->table_name;
+        $query = "SELECT * FROM " . $this->table_name . " WHERE status = 1";
         $stmt = $this->conn->prepare($query);
 
         if ($stmt->execute()) {
@@ -132,7 +133,7 @@ class Image
     #####################################################
     function get_all_image_by_category_id()
     {
-        $query = "SELECT * FROM " . $this->table_name . " WHERE category_id = :id";
+        $query = "SELECT * FROM " . $this->table_name . " WHERE (category_id = :id  AND status = 1)";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':id', $this->categoryId);
         if ($stmt->execute()) {
@@ -149,7 +150,7 @@ class Image
     #####################################################
     function get_image_info_by_image_id()
     {
-        $query = "SELECT * FROM " . $this->table_name . " WHERE id = :id LIMIT 0,1";
+        $query = "SELECT * FROM " . $this->table_name . " WHERE (id = :id AND status = 1) LIMIT 0,1";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':id', $this->id);
         if ($stmt->execute()) {
