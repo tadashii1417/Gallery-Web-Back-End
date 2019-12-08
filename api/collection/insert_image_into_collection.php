@@ -48,6 +48,8 @@ if (($collection_id <> "") and ($image_id <> "")) {
 
             if ($collection_image->insert_image_to_collection()) {
                 http_response_code(200);
+                echo json_encode(["message" => "Insert successful"]);
+
             } else {
                 http_response_code(401);
                 echo json_encode(["message" => "Unable to insert data. Duplicate."]);

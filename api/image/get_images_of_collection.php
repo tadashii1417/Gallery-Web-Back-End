@@ -32,6 +32,9 @@ try {
     if ($stmt->execute()) {
         $ret = array();
         while ($row = $stmt->fetchObject()) {
+            $temp_user = new User($db);
+            $temp_user->id = $row->user_id;
+            $row->owner = $temp_user->get_owner_info();
             $ret[] = $row;
         }
         echo json_encode(["images" => $ret]);
