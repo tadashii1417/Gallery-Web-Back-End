@@ -16,6 +16,7 @@ try {
     $ret = array();
     while ($row = $stmt->fetchObject()) {
         $user = new stdClass();
+        $user->id = $row->id;
         $user->username = $row->username;
         $user->firstname = $row->firstname;
         $user->lastname = $row->lastname;
