@@ -53,7 +53,7 @@ if ($user_exists && password_verify($data->password, $user->password)) {
 			[
 				"message" => "Successful login.",
 				"jwt"     => $jwt,
-                "user"    => $user
+				"user"    => $user
 			]
 		);
 	} else {
