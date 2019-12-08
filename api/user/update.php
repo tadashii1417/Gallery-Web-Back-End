@@ -30,6 +30,7 @@ if ($jwt) {
 
 		$user->id        = $decoded->data->id;
 		$user->username  = $decoded->data->username;
+		$user->avatarUrl  = $decoded->data->avatarUrl;
 		$user->firstname = $data->firstname;
 		$user->lastname  = $data->lastname;
 		$user->email     = $data->email;
@@ -57,7 +58,7 @@ if ($jwt) {
 				[
 					"message" => "User was updated.",
 					"jwt"     => $jwt,
-                    "user"  =>$user
+                    "user"  =>$user -> get_owner_info()
 				]
 			);
 		} else {
