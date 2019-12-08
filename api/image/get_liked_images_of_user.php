@@ -26,7 +26,7 @@ if (!isset($_GET['user_id'])) {
 
 try {
     $query = 'SELECT d2.* FROM loves AS d1, images AS d2
-    WHERE (user_id = :user_id) AND (d1.image_id = d2.id) AND (d2.status = 1)';
+    WHERE (d1.user_id = :user_id) AND (d1.image_id = d2.id) AND (d2.status = 1)';
     $stmt = $db->prepare($query);
     $stmt->bindParam(':user_id', $_GET['user_id']);
     if ($stmt->execute()) {
