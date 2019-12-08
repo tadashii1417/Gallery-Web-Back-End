@@ -34,6 +34,7 @@ $jwt = $data->jwt;
 try {
     $decoded = JWT::decode($jwt, $key, ['HS256']);
     if ($decoded->data->role != "admin") {
+        http_response_code(403);
         echo json_encode(array("message" => "Action not permitted."));
         return;
     }
