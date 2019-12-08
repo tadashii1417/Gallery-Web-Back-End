@@ -29,6 +29,7 @@ if ($jwt) {
 		$decoded = JWT::decode($jwt, $key, ['HS256']);
 
 		$user->id        = $decoded->data->id;
+		$user->username  = $decoded->data->username;
 		$user->firstname = $data->firstname;
 		$user->lastname  = $data->lastname;
 		$user->email     = $data->email;
@@ -56,6 +57,7 @@ if ($jwt) {
 				[
 					"message" => "User was updated.",
 					"jwt"     => $jwt,
+                    "user"  =>$user
 				]
 			);
 		} else {

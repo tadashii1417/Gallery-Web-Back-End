@@ -13,7 +13,7 @@ class User
 	public $email;
 	public $username;
 	public $password;
-	public $avatarUrl = "https://cdn0.iconfinder.com/data/icons/avatars-6/500/Avatar_boy_man_people_account_client_male_person_user_work_sport_beard_team_glasses-512.png";
+	public $avatarUrl = "null";
 	public $description;
 	public $status = 1;
 	public $role = "member";
