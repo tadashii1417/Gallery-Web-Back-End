@@ -20,7 +20,7 @@ $db = $database->getConnection();
 
 // $data = json_decode(file_get_contents("php://input"));
 if (!isset($_GET['collection_id'])) {
-    http_respones_code(400);
+    http_response_code(400);
     return (json_encode(['message' => 'missing collection_id']));
 }
 
