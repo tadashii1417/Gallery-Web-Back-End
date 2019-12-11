@@ -33,10 +33,10 @@ $user = new User($db);
 
 #Check the input
 $jwt = isset($data->jwt) ? $data->jwt : "";
-$image_id = isset($data->id) ? $data->id : "";
+$image_id = isset($data->image_id) ? $data->image_id : "";
 
 #Check if jwt and image_id from client is not empty
-if (($jwt <> "") and ($image_id <> "")) {
+if (($jwt != "") and ($image_id != "")) {
     try {
         #Decode jwt to get user information
         $decoded = JWT::decode($jwt, $key, ['HS256']);
@@ -67,7 +67,7 @@ if (($jwt <> "") and ($image_id <> "")) {
                 http_response_code(401);
                 echo json_encode([
                     "message" => "Access denied.",
-                    "error" => $e->getMessage()
+                    "error" => $e->getMessage(),
                 ]);
             }
         } else {
@@ -78,7 +78,7 @@ if (($jwt <> "") and ($image_id <> "")) {
         http_response_code(401);
         echo json_encode([
             "message" => "Access denied.",
-            "error" => $e->getMessage()
+            "error" => $e->getMessage(),
         ]);
     }
 } else {
