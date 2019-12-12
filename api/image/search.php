@@ -12,8 +12,8 @@ $db = $database->getConnection();
 
 try {
     $keyword = $_GET['keyword'];
-    $keyword = htmlspecialchars(strip_tags($keyword));
-    $query = 'SELECT * FROM images WHERE status = 1 AND description LIKE "%' . $keyword . '%"';
+    $keyword = strtolower(htmlspecialchars(strip_tags($keyword)));
+    $query = 'SELECT * FROM images WHERE status = 1 AND lower(description) LIKE "%' . $keyword . '%"';
     $stmt = $db->prepare($query);
     if ($stmt->execute()) {
         $ret = array();
