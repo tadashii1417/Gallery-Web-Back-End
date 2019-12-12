@@ -7,7 +7,7 @@ include_once '../../objects/user.php';
 $database = new Database();
 $db = $database->getConnection();
 
-$query = "SELECT * FROM users";
+$query = "SELECT * FROM users WHERE role != 'admin'";
 
 $stmt = $db->prepare($query);
 
